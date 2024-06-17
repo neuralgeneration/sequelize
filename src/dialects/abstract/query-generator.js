@@ -2453,10 +2453,6 @@ https://github.com/sequelize/sequelize/discussions/15694`);
   }
 
   whereItemQuery(key, value, options = {}) {
-    if (value === undefined) {
-      throw new Error(`WHERE parameter "${key}" has invalid "undefined" value`);
-    }
-
     if (typeof key === 'string' && key.includes('.') && options.model) {
       const keyParts = key.split('.');
       if (options.model.rawAttributes[keyParts[0]] && options.model.rawAttributes[keyParts[0]].type instanceof DataTypes.JSON) {
