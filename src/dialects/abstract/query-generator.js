@@ -1541,8 +1541,8 @@ class QueryGenerator {
       }
 
       // Add NO WAIT / SKIP LOCKED options to the lock portion of the query
-      const skipLocked = this.dialect.supports.skipLocked && options.skipLocked;
-      const noWait = this.dialect.supports.noWait && options.noWait;
+      const skipLocked = this._dialect.supports.skipLocked && options.skipLocked;
+      const noWait = this._dialect.supports.noWait && options.noWait;
       if (skipLocked && noWait) {
         throw new Error('Only one of skipLocked or noWait may be specified for a query');
       }
