@@ -2435,6 +2435,8 @@ https://github.com/sequelize/sequelize/discussions/15694`);
       throw new Error('Support for `{where: \'raw query\'}` has been removed.');
     }
 
+    Object.keys(where).forEach(key => where[key] === undefined && delete where[key]);
+
     const items = [];
 
     binding = binding || 'AND';
