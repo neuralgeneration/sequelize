@@ -231,14 +231,14 @@
     "docs": "sh docs.sh",
     "----------------------------------------- tests ---------------------------------------------------": "",
     "mocha": "mocha -r ./test/registerEsbuild",
-    "test-unit": "yarn mocha \"test/unit/**/*.test.[tj]s\"",
-    "test-integration": "yarn mocha \"test/integration/**/*.test.[tj]s\"",
+    "test-unit": "pnpm mocha \"test/unit/**/*.test.[tj]s\"",
+    "test-integration": "pnpm mocha \"test/integration/**/*.test.[tj]s\"",
     "teaser": "node test/teaser.js",
     "test": "npm run prepare && npm run test-typings && npm run teaser && npm run test-unit && npm run test-integration",
     "----------------------------------------- coverage ------------------------------------------------": "",
     "cover": "rimraf coverage && npm run teaser && npm run cover-integration && npm run cover-unit && npm run merge-coverage",
-    "cover-integration": "cross-env COVERAGE=true nyc --reporter=lcovonly yarn mocha \"test/integration/**/*.test.[tj]s\" && node -e \"require('fs').renameSync('coverage/lcov.info', 'coverage/integration.info')\"",
-    "cover-unit": "cross-env COVERAGE=true nyc --reporter=lcovonly yarn mocha \"test/unit/**/*.test.[tj]s\" && node -e \"require('fs').renameSync('coverage/lcov.info', 'coverage/unit.info')\"",
+    "cover-integration": "cross-env COVERAGE=true nyc --reporter=lcovonly pnpm mocha \"test/integration/**/*.test.[tj]s\" && node -e \"require('fs').renameSync('coverage/lcov.info', 'coverage/integration.info')\"",
+    "cover-unit": "cross-env COVERAGE=true nyc --reporter=lcovonly pnpm mocha \"test/unit/**/*.test.[tj]s\" && node -e \"require('fs').renameSync('coverage/lcov.info', 'coverage/unit.info')\"",
     "merge-coverage": "lcov-result-merger \"coverage/*.info\" \"coverage/lcov.info\"",
     "----------------------------------------- local test dbs ------------------------------------------": "",
     "start-mariadb": "bash dev/mariadb/10.3/start.sh",
@@ -307,5 +307,5 @@
     "---------------------------------------------------------------------------------------------------": ""
   },
   "support": true,
-  "packageManager": "yarn@4.3.1"
+  "packageManager": "pnpm@9.7.1"
 }
