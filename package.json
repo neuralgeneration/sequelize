@@ -49,7 +49,7 @@
     "index.js"
   ],
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "@types/debug": "^4.1.8",
     "@types/validator": "^13.7.17",
     "debug": "^4.3.4",
