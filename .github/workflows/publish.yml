@@ -1,0 +1,58 @@
+# Publishes this fork to GitHub Packages as @neuralgeneration/sequelize.
+#
+# Trigger: push a tag that matches the version in package.json, e.g.
+#   git tag v6.37.3-nowait.1 && git push origin v6.37.3-nowait.1
+# or run the workflow manually (publishes whatever version package.json has).
+name: Publish to GitHub Packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          registry-url: https://npm.pkg.github.com
+          scope: '@neuralgeneration'
+
+      - name: Check that the tag matches package.json version
+        if: github.ref_type == 'tag'
+        run: |
+          pkg_version="$(node -p "require('./package.json').version")"
+          if [ "v${pkg_version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match package.json version ${pkg_version}" >&2
+            exit 1
+          fi
+
+      # --ignore-scripts: devDependencies contain ibm_db and oracledb, whose native
+      # builds (node-gyp 8 + distutils) fail on Python >= 3.12. They are not needed
+      # to build the package; lib/ and types/ are built explicitly below.
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts --ignore-engines
+
+      - name: Build lib/ and types/
+        run: yarn build
+
+      - name: Smoke test
+        run: |
+          node -e "require('./lib')"
+          test -f types/index.d.ts
+          npm pack --dry-run --ignore-scripts
+
+      - name: Publish
+        run: npm publish --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

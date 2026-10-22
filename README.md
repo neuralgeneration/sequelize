@@ -1,3 +1,14 @@
+> **StarPets fork (`no_wait` branch).** Upstream Sequelize v6.37.3 plus:
+> the `noWait` option for `lock` (Postgres `FOR UPDATE NOWAIT`) and silent dropping of `undefined` keys in `where`.
+> Published to GitHub Packages as `@neuralgeneration/sequelize`.
+>
+> **Release:** bump `version` in `package.json`, commit, then push a matching tag:
+> `git tag v6.37.3-nowait.2 && git push origin v6.37.3-nowait.2`.
+> The "Publish to GitHub Packages" workflow builds `lib/` + `types/` and publishes the package.
+>
+> **Consume:** `"sequelize": "npm:@neuralgeneration/sequelize@6.37.3-nowait.1"` in `package.json`
+> and `@neuralgeneration:registry=https://npm.pkg.github.com` in `.npmrc`.
+
 <p align="center">
   <img src="logo.svg" width="100" alt="Sequelize logo" />
   <h1 align="center"><a href="https://sequelize.org">Sequelize</a></h1>
